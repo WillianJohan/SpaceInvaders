@@ -21,7 +21,7 @@ public class Player_SI : MonoBehaviour {
 	private Rigidbody2D rb2d;
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-
+		canMove = true;
 	}
 
 	// Update is called once per frame
