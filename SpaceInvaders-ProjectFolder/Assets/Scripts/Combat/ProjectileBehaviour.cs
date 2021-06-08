@@ -51,7 +51,9 @@ public class ProjectileBehaviour : MonoBehaviour
     void TryDestroyBarrier(Collider other)
     {
         Destroy(other.gameObject);
-        Collider[] colliders = Physics.OverlapSphere(transform.position, destructionRadius, BarrierLayer);
+
+        Vector3 center = GetComponent<BoxCollider>().center;
+        Collider[] colliders = Physics.OverlapSphere(transform.position + center, destructionRadius, BarrierLayer);
         foreach (Collider coll in colliders)
             Destroy(coll.gameObject);
 
