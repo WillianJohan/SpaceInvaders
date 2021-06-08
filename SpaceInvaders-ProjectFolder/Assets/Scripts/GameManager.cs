@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [Header("Prefabs")]
     [SerializeField] GameObject playerPrefab;
@@ -14,13 +13,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform barrierSpawnLocation;
     [SerializeField] Transform enemiesSpawnLocation;
 
-    [Header("etc")]
+    [Header("Spawn Atributte")]
     [SerializeField] float spawnVelocity = 0.2f;
 
-    private void Start()
-    {
-        StartCoroutine(StartNewGame());
-    }
+    GameObject playerInstance;
+    GameObject barrierInstance;
+    GameObject aliensInstance;
+
+    private void Start() => StartCoroutine(StartNewGame());
 
     IEnumerator StartNewGame()
     {
@@ -28,18 +28,33 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //Player Spawn
-        Instantiate(playerPrefab, playerSpawnLocation.position, Quaternion.identity);
+        playerInstance = Instantiate(playerPrefab, playerSpawnLocation.position, Quaternion.identity);
         yield return new WaitForSeconds(spawnVelocity);
         
         //Barrier Spawn
-        Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
+        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
         yield return new WaitForSeconds(spawnVelocity);
         
         //Enemies Spawn
-        Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
+        aliensInstance = Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
         
         
         yield return null;
     }
 
+    IEnumerator NewWave()
+    {
+        Destroy(aliensInstance);
+        Destroy(barrierInstance);
+
+        yield return new WaitForSeconds(spawnVelocity);
+
+        //Player Spawn
+        playerInstance = Instantiate(playerPrefab, playerSpawnLocation.position, Quaternion.identity);
+        yield return new WaitForSeconds(spawnVelocity);
+
+        //Barrier Spawn
+        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
+        yield return new WaitForSeconds(spawnVelocity);
+    }
 }
