@@ -12,6 +12,8 @@ public class AlienSpawner : Singleton<AlienSpawner>
 
     IEnumerator SpawnEnemieLines()
     {
+		AlienCombatBehaviour.IsEnabled = false; // TODO: Essa linha pode ser alterada futuramente
+
 		for (int i = alienLines.Length - 1; i >= 0; i--)
 		{
 			for (int b = 0; b < amountOfAlienForEachLine; b++)
@@ -26,6 +28,9 @@ public class AlienSpawner : Singleton<AlienSpawner>
 		}
 
 		GetComponent<AlienControlCenter>().enabled = true;
+		
+		
+		AlienCombatBehaviour.IsEnabled = true; // TODO: Essa linha pode ser alterada futuramente
 
 		yield return null;
     }

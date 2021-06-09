@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -20,6 +21,10 @@ public class GameManager : Singleton<GameManager>
     GameObject barrierInstance;
     GameObject aliensInstance;
 
+    public static event Action StartGame;
+    public static event Action StartPreparingNewWave;
+    public static event Action NewWaveBegin;
+
     private void Start() => StartCoroutine(StartNewGame());
 
     IEnumerator StartNewGame()
@@ -37,24 +42,27 @@ public class GameManager : Singleton<GameManager>
         
         //Enemies Spawn
         aliensInstance = Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
-        
-        
+
+        StartGame?.Invoke();
+
         yield return null;
     }
 
     IEnumerator NewWave()
     {
+        StartPreparingNewWave?.Invoke();
+
         Destroy(aliensInstance);
         Destroy(barrierInstance);
 
         yield return new WaitForSeconds(spawnVelocity);
 
-        //Player Spawn
-        playerInstance = Instantiate(playerPrefab, playerSpawnLocation.position, Quaternion.identity);
+        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
+        
         yield return new WaitForSeconds(spawnVelocity);
 
-        //Barrier Spawn
-        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
-        yield return new WaitForSeconds(spawnVelocity);
+        aliensInstance = Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
+
+        NewWaveBegin?.Invoke();
     }
 }

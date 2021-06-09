@@ -21,25 +21,23 @@ public class CharacterBehaviour : MonoBehaviour
     [SerializeField] Transform projectileInitialPosition;
     [SerializeField] float shotDelay;
 
-    bool CanMove;
-    bool CanShot;
+    bool CanMove = false;
+    bool CanShot = false;
 
     #region Unity Standard Methods
 
     void Awake()
     {
-        //Subscribe to handle init game
-    }
-
-    void Start()
-    {
-        CanMove = true;
-        CanShot = true;
+        GameManager.StartGame += HandleInitGame;
+        GameManager.StartPreparingNewWave += HandlePreparingNewWave;
+        GameManager.StartPreparingNewWave += HandleNewWaveDone;
     }
 
     void OnDestroy()
     {
-        //Unsubscrive to handleInitGame
+        GameManager.StartGame -= HandleInitGame;
+        GameManager.StartPreparingNewWave -= HandlePreparingNewWave;
+        GameManager.StartPreparingNewWave -= HandleNewWaveDone;
     }
 
     void Update()
@@ -111,13 +109,17 @@ public class CharacterBehaviour : MonoBehaviour
     {
         CanMove = true;
         CanShot = true;
-        //Unsubscribe
     }
 
-    void HandlePreparingGame()
+    void HandlePreparingNewWave()
     {
-        CanMove = false;
+        CanMove = true;
         CanShot = false;
+    }
+    void HandleNewWaveDone() 
+    {
+        CanMove = true;
+        CanShot = true;
     }
 
     #endregion

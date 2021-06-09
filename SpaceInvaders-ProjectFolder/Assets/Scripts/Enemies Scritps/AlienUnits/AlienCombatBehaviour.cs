@@ -15,14 +15,14 @@ public class AlienCombatBehaviour : MonoBehaviour
     float checkPlayerPosition_DelayTime;
     float lastCheck = 0;
 
-    private void Start()
-    {
-        checkPlayerPosition_DelayTime = Random.Range(0.5f, 2);
-    }
+    public static bool IsEnabled = false;
 
-    void Update()
+    private void Start() => checkPlayerPosition_DelayTime = Random.Range(0.5f, 2);
+    void Update() 
     {
-        
+        if (!IsEnabled)
+            return;
+
         lastCheck += Time.deltaTime;
 
         if (lastCheck <= checkPlayerPosition_DelayTime)
@@ -30,9 +30,9 @@ public class AlienCombatBehaviour : MonoBehaviour
 
         lastCheck = 0;
 
-        Ray leftRay = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
-        Ray middleRay = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
-        Ray rightRay = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
+        Ray leftRay     = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
+        Ray middleRay   = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
+        Ray rightRay    = new Ray(projectileInitialPosition.position - Vector3.right, -Vector3.up);
 
         //Checks if have a alien bellow
         if (Physics.Raycast(leftRay, 10, AlienLayer)    ||
