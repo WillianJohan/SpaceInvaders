@@ -48,7 +48,6 @@ public class AlienCombatBehaviour : MonoBehaviour
 
     }
 
-
     void TryKillPlayer(Collider other)
     {
         if (!other.TryGetComponent<IDamageable>(out IDamageable otherDamageable))
