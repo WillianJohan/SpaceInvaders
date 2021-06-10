@@ -1,38 +1,41 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class AlienSpawner : Singleton<AlienSpawner>
 {
+	[SerializeField] AlienControlCenter controlCenter;
+	[SerializeField] int enemiesForLine = 11;
+	[SerializeField] float horizontalSpace;
+	[SerializeField] float verticalSpace;
+	[SerializeField] float spawnVelocity = 0.03f;
 
-	[SerializeField] AlienLineControl[] alienLines;
-	[SerializeField] int amountOfAlienForEachLine = 11;
-	[SerializeField] float spaceBetweenEnemies;
+	public static event Action OnStartSpawningAliens;
+	public static event Action OnFinishedSpawningAliens;
 
-	void Start() => StartCoroutine(SpawnEnemieLines());
-
-    IEnumerator SpawnEnemieLines()
+	IEnumerator SpawnEnemieLines()
     {
-		AlienCombatBehaviour.IsEnabled = false; // TODO: Essa linha pode ser alterada futuramente
+		OnStartSpawningAliens?.Invoke();
 
-		for (int i = alienLines.Length - 1; i >= 0; i--)
+		for (int y = controlCenter.alienLineControl.Length - 1; y >= 0; y--)
 		{
-			for (int b = 0; b < amountOfAlienForEachLine; b++)
+			for (int x = 0; x < enemiesForLine; x++)
 			{
-				Transform LineTransform = alienLines[i].GetComponent<Transform>();
-				Vector3 spawnPosition = new Vector3(LineTransform.position.x + (b * spaceBetweenEnemies), LineTransform.position.y, LineTransform.position.z);
-				Instantiate(alienLines[i].AlienPrefab, spawnPosition, Quaternion.identity, alienLines[i].gameObject.transform);
+				Vector3 spawnPosition = new Vector3(
+					transform.position.x + (x * horizontalSpace), 
+					transform.position.y + (y * verticalSpace), 
+					transform.position.z);
 
-				yield return new WaitForSeconds(0.02f);
+				GameObject alienInstance = Instantiate(controlCenter.alienLineControl[y].AlienPrefab, spawnPosition, Quaternion.identity, this.transform);
+				controlCenter.alienLineControl[y].AddAlien(alienInstance);
+
+				yield return new WaitForSeconds(spawnVelocity);
 			}
-			yield return new WaitForSeconds(0.05f);
+			yield return new WaitForSeconds(spawnVelocity);
 		}
 
-		GetComponent<AlienControlCenter>().enabled = true;
-		
-		
-		AlienCombatBehaviour.IsEnabled = true; // TODO: Essa linha pode ser alterada futuramente
+		OnFinishedSpawningAliens?.Invoke();
 
 		yield return null;
     }
-
 }
