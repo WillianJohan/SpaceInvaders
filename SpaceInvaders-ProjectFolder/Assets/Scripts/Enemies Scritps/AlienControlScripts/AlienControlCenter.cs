@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class AlienControlCenter : Singleton<AlienControlCenter>
 {
-    [SerializeField] AlienLineControl[] alienLineControl;
+    public AlienLineController[] alienLineControl;
+	
 	[SerializeField] float distanceMovement;
 	[SerializeField] float movimentDelay = 0.2f;
 
@@ -13,6 +14,8 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	bool isMovingX = false;
 
 	enum HorizontalMovimentDirection { left = -1, right = 1 }
+
+    #region Standard Unity Methods
 
     protected override void Awake()
     {
@@ -39,7 +42,11 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			StartCoroutine(MoveAliensDown());
     }
 
-	void HandleTransition() => needTransition = true;
+    #endregion
+
+    #region Moviment Behaviour methods
+
+    void HandleTransition() => needTransition = true;
 
     IEnumerator MoveAlienHorizontal()
 	{
@@ -47,7 +54,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 		for (int i = alienLineControl.Length - 1; i >= 0; i--)
 		{
-			alienLineControl[i].MoveAliens(Vector3.right * distanceMovement * (int)movimentDirection);
+			alienLineControl[i].SendMoveCommand(Vector3.right * distanceMovement * (int)movimentDirection);
 			yield return new WaitForSeconds(movimentDelay);
 		}
 
@@ -64,11 +71,13 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 		for (int i = alienLineControl.Length - 1; i >= 0; i--)
 		{
-			alienLineControl[i].MoveAliens(-Vector3.up * distanceMovement); 
+			alienLineControl[i].SendMoveCommand(-Vector3.up * distanceMovement); 
 			yield return new WaitForSeconds(movimentDelay);
 		}
 		
 		needTransition = false;
 		isMovingY = false;
 	}
+
+    #endregion
 }
