@@ -10,6 +10,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 	HorizontalMovimentDirection movimentDirection = HorizontalMovimentDirection.right;
 	bool needTransition = false;
+	bool canMove = false;
 	bool isMovingY = false;
 	bool isMovingX = false;
 
@@ -21,18 +22,29 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
     {
 		base.Awake();
 
-		// subscribe to transition
 		AlienDetectionLimit.AlienReachedTheLimit += HandleTransition;
+		AlienSpawner.OnStartSpawningAliens += HandleStartSpawningAliens;
+		AlienSpawner.OnFinishedSpawningAliens += HandleFinishedSpawningAliens;
     }
 
     private void OnDestroy()
     {
-		// unsubscribe to transition
 		AlienDetectionLimit.AlienReachedTheLimit -= HandleTransition;
+		AlienSpawner.OnStartSpawningAliens -= HandleStartSpawningAliens;
+		AlienSpawner.OnFinishedSpawningAliens -= HandleFinishedSpawningAliens;
 	}
 
-    void Update()
+	void Update() => MovimentBehaviour();
+
+	#endregion
+
+	#region Moviment Behaviour methods
+
+	void MovimentBehaviour()
     {
+		if (!canMove)
+			return;
+
 		if (isMovingX)
 			return;
 
@@ -40,13 +52,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			StartCoroutine(MoveAlienHorizontal());
 		else if (!isMovingY && needTransition)
 			StartCoroutine(MoveAliensDown());
-    }
-
-    #endregion
-
-    #region Moviment Behaviour methods
-
-    void HandleTransition() => needTransition = true;
+	}
 
     IEnumerator MoveAlienHorizontal()
 	{
@@ -79,5 +85,28 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 		isMovingY = false;
 	}
 
-    #endregion
+	#endregion
+
+	#region Event Handlers
+
+	void HandleTransition() => needTransition = true;
+
+	void HandleStartSpawningAliens()
+    {
+		StopAllCoroutines();
+
+		canMove = false;
+		isMovingX = false;
+		isMovingY = false;
+		needTransition = false;
+		movimentDirection = HorizontalMovimentDirection.right;
+	}
+
+	void HandleFinishedSpawningAliens()
+    {
+		canMove = true;
+    }
+
+	#endregion
+
 }
