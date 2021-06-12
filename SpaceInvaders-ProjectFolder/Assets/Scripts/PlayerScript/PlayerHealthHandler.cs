@@ -1,17 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public class PlayerHealthHandler : MonoBehaviour
 {
     [SerializeField] Health health;
 
-    void Awake() => health.OnDie += HandleDie;
-    void OnDestroy() => health.OnDie -= HandleDie;
+    public static event Action OnPlayerDie;
+    public static event Action OnPlayerSpawn;
+
+    void Awake()        => health.OnDie += HandleDie;
+    void OnDestroy()    => health.OnDie -= HandleDie;
+    void Start()        => OnPlayerSpawn?.Invoke();
 
     void HandleDie()
     {
-        //Chamar o gerenciador o metodo end game ou algo assim
+        OnPlayerDie?.Invoke();
         Destroy(gameObject);
     }
 
