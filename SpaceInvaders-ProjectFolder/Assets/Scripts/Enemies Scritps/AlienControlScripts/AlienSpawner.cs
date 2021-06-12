@@ -13,11 +13,13 @@ public class AlienSpawner : Singleton<AlienSpawner>
 	public static event Action OnStartSpawningAliens;
 	public static event Action OnFinishedSpawningAliens;
 
+	public void SpawnAliens() => StartCoroutine(SpawnEnemieLines());
+
 	IEnumerator SpawnEnemieLines()
     {
 		OnStartSpawningAliens?.Invoke();
 
-		for (int y = controlCenter.alienLineControl.Length - 1; y >= 0; y--)
+		for (int y = 0; y <= controlCenter.alienLineControl.Length -1 ; y++)
 		{
 			for (int x = 0; x < enemiesForLine; x++)
 			{
