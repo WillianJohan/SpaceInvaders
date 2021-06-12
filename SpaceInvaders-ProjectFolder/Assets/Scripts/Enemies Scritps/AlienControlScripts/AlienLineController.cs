@@ -6,12 +6,17 @@ using UnityEngine;
 public class AlienLineController
 {
 	public GameObject AlienPrefab;
-	List<AlienCommandReceiver> alienList;
+	List<AlienCommandReceiver> alienList = new List<AlienCommandReceiver>();
 
 	public void SendMoveCommand(Vector3 direction)
 	{
-		foreach (AlienCommandReceiver alien in alienList)
-			alien?.Move(direction);
+		for(int i = 0; i < alienList.Count; i++)
+        {
+			if (alienList[i] != null)
+				alienList[i]?.Move(direction);
+			else
+				alienList.RemoveAt(i);
+        }
 	}
 
 	public void AddAlien(GameObject alienInstance)
