@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    public int CurrentScore { get; private set; } = 0;
+    public static int CurrentScore { get; private set; } = 0;
 
     public static event Action<int> OnScoreUpdated;
 
     void Awake()        => AlienHealthHandler.OnAlienDie += HandleAlienDie;
     void OnDestroy()    => AlienHealthHandler.OnAlienDie -= HandleAlienDie;
+    void Start()        => CurrentScore = 0;
+
 
     void AddScore(int value)
     {
@@ -23,5 +25,4 @@ public class ScoreManager : Singleton<ScoreManager>
         else
             AddScore((int)alien);
     }
-
 }
