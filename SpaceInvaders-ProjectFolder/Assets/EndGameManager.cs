@@ -1,11 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndGameManager : MonoBehaviour
 {
 
     [SerializeField] GameObject endGameScreen;
+    [SerializeField] GameObject anyButtonExit;
+
+    [SerializeField] Text HighScoreText;
+    [SerializeField] Text CurrentText;
 
     void Start()        => endGameScreen.SetActive(false);
     void Awake()        => PlayerHealthHandler.OnPlayerDie += HandleOnPlayerDie;
@@ -13,6 +17,9 @@ public class EndGameManager : MonoBehaviour
 
     void HandleOnPlayerDie()
     {
+        HighScoreText.text = Data.Load().ToString();
+        CurrentText.text = ScoreManager.CurrentScore.ToString();
+
         //Save player Score
         Data.Save(ScoreManager.CurrentScore);
 
@@ -25,6 +32,10 @@ public class EndGameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         endGameScreen.SetActive(true);
+        
+        yield return new WaitForSeconds(0.5f);
+
+        anyButtonExit.SetActive(true);
 
         yield return null;
     }
