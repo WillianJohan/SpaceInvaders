@@ -9,7 +9,7 @@ public class ScoreDisplay : MonoBehaviour
 
     void Start()
     {
-        scoreText.text = FindObjectOfType<ScoreManager>().CurrentScore.ToString();
+        scoreText.text = ScoreManager.CurrentScore.ToString();
     }
 
     void UpdateScoreMesh(int score)
