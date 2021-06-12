@@ -75,7 +75,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			HorizontalMovimentDirection.left :
 			HorizontalMovimentDirection.right;
 
-		for (int i = alienLineControl.Length - 1; i >= 0; i--)
+		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{
 			alienLineControl[i].SendMoveCommand(-Vector3.up * distanceMovement); 
 			yield return new WaitForSeconds(movimentDelay);
