@@ -7,25 +7,52 @@ public class GameManager : Singleton<GameManager>
     [Header("Prefabs")]
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject barrierPrefab;
-    [SerializeField] GameObject enemiesPrefab;
 
     [Header("Spawn Reference")]
     [SerializeField] Transform playerSpawnLocation;
     [SerializeField] Transform barrierSpawnLocation;
-    [SerializeField] Transform enemiesSpawnLocation;
+    [SerializeField] AlienSpawner alienSpawner;
 
     [Header("Spawn Atributte")]
     [SerializeField] float spawnVelocity = 0.2f;
 
     GameObject playerInstance;
     GameObject barrierInstance;
-    GameObject aliensInstance;
+
+    bool isSpawningAliens = false;
+
+
+    public static int AliensAlive { get; private set; } = 0;
+
 
     public static event Action StartGame;
-    public static event Action StartPreparingNewWave;
-    public static event Action NewWaveBegin;
+    public static event Action StartingNewWave;
+
+    #region Standard Unity Methods
+
+    void Awake()
+    {
+        AlienSpawner.OnStartSpawningAliens += HandleOnStartSpawningAliens;
+        AlienSpawner.OnFinishedSpawningAliens += HandleOnFinishedSpawningAliens;
+
+        AlienHealthHandler.OnAlienSpawn += HandleAlienSpawn;
+        AlienHealthHandler.OnAlienDie += HandleAlienDie;
+    }
+
+    private void OnDestroy()
+    {
+        AlienSpawner.OnStartSpawningAliens -= HandleOnStartSpawningAliens;
+        AlienSpawner.OnFinishedSpawningAliens -= HandleOnFinishedSpawningAliens;
+
+        AlienHealthHandler.OnAlienSpawn -= HandleAlienSpawn;
+        AlienHealthHandler.OnAlienDie -= HandleAlienDie;
+    }
 
     private void Start() => StartCoroutine(StartNewGame());
+
+    #endregion
+
+    #region IEnumerators Methods
 
     IEnumerator StartNewGame()
     {
@@ -39,9 +66,12 @@ public class GameManager : Singleton<GameManager>
         //Barrier Spawn
         barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
         yield return new WaitForSeconds(spawnVelocity);
-        
+
         //Enemies Spawn
-        aliensInstance = Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
+        alienSpawner.SpawnAliens();
+
+        while (isSpawningAliens)
+            yield return new WaitForSeconds(0.1f);
 
         StartGame?.Invoke();
 
@@ -50,19 +80,42 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator NewWave()
     {
-        StartPreparingNewWave?.Invoke();
+        StartingNewWave?.Invoke();
 
-        Destroy(aliensInstance);
+        //Destroy Barrier
         Destroy(barrierInstance);
-
         yield return new WaitForSeconds(spawnVelocity);
-
-        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
         
+
+        //instantiate a new Barrier
+        barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
         yield return new WaitForSeconds(spawnVelocity);
 
-        aliensInstance = Instantiate(enemiesPrefab, enemiesSpawnLocation.position, Quaternion.identity);
+        //Enemies Spawn
+        alienSpawner.SpawnAliens();
 
-        NewWaveBegin?.Invoke();
+        while (isSpawningAliens)
+            yield return new WaitForSeconds(0.1f);
+
+        StartGame?.Invoke();
+        yield return null;
     }
+
+    #endregion
+
+    #region Handle event Methods
+
+    void HandleOnStartSpawningAliens()      => isSpawningAliens = true;
+    void HandleOnFinishedSpawningAliens()   => isSpawningAliens = false;
+
+    void HandleAlienSpawn(AlienType type)   => AliensAlive++;
+    void HandleAlienDie(AlienType type)
+    {
+        AliensAlive--;
+        if (AliensAlive == 0)
+            StartCoroutine(NewWave());
+    }
+
+    #endregion
+
 }
