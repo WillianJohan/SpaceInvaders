@@ -17,11 +17,11 @@ public class EndGameManager : MonoBehaviour
 
     void HandleOnPlayerDie()
     {
-        HighScoreText.text = Data.Load().ToString();
+        HighScoreText.text = DataManager.LoadScore().ToString();
         CurrentText.text = ScoreManager.CurrentScore.ToString();
 
         //Save player Score
-        Data.Save(ScoreManager.CurrentScore);
+        DataManager.SaveScore(ScoreManager.CurrentScore);
 
         //Habilita tela de end Game
         StartCoroutine(ActivateEndGameScreen());

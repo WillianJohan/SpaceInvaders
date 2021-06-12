@@ -36,7 +36,7 @@ namespace StartMenu
 
         void Start()
         {
-            HiScoreText.text = "Hi-Score = " + Data.Load().ToString();
+            HiScoreText.text = "Hi-Score = " + DataManager.LoadScore().ToString();
             
             foreach (GameObject item in objectsToActivate)
                 item.SetActive(false);
