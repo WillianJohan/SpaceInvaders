@@ -29,15 +29,13 @@ public class CharacterBehaviour : MonoBehaviour
     void Awake()
     {
         GameManager.StartGame += HandleInitGame;
-        GameManager.StartPreparingNewWave += HandlePreparingNewWave;
-        GameManager.StartPreparingNewWave += HandleNewWaveDone;
+        GameManager.StartingNewWave += HandleStartingNewWave;
     }
 
     void OnDestroy()
     {
         GameManager.StartGame -= HandleInitGame;
-        GameManager.StartPreparingNewWave -= HandlePreparingNewWave;
-        GameManager.StartPreparingNewWave -= HandleNewWaveDone;
+        GameManager.StartingNewWave -= HandleStartingNewWave;
     }
 
     void Update()
@@ -103,23 +101,16 @@ public class CharacterBehaviour : MonoBehaviour
 
     #region Handle events methods
 
-
-    //Revisar metodos depois de criar o gerenciador
     void HandleInitGame()
     {
         CanMove = true;
         CanShot = true;
     }
 
-    void HandlePreparingNewWave()
+    void HandleStartingNewWave() 
     {
         CanMove = true;
         CanShot = false;
-    }
-    void HandleNewWaveDone() 
-    {
-        CanMove = true;
-        CanShot = true;
     }
 
     #endregion
