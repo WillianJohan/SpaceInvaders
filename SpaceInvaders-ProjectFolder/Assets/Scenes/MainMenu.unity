@@ -1015,7 +1015,7 @@ MonoBehaviour:
   - {fileID: 7247555097884096579, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   - {fileID: 2371910594061985837, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   meshFilter: {fileID: 1036965687}
-  time: 0.2
+  time: 0.66
 --- !u!1 &922849976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   - {fileID: 7528465347586836209, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   - {fileID: 543093270411715579, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   meshFilter: {fileID: 524858981}
-  time: 0.2
+  time: 0.66
 --- !u!1 &1592958675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1623,7 @@ MonoBehaviour:
   - {fileID: -7207264496040596601, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   - {fileID: -5656513281862051134, guid: 5d97ee8be8cf04546852782ad891cba8, type: 3}
   meshFilter: {fileID: 248698628}
-  time: 0.2
+  time: 0.66
 --- !u!1 &1709569311
 GameObject:
   m_ObjectHideFlags: 0

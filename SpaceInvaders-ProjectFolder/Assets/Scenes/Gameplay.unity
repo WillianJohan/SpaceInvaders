@@ -781,8 +781,9 @@ MonoBehaviour:
   - AlienPrefab: {fileID: 5313010406716943756, guid: c90782fca649c1b4594ae822b7348576, type: 3}
   - AlienPrefab: {fileID: 5313010406716943756, guid: c90782fca649c1b4594ae822b7348576, type: 3}
   - AlienPrefab: {fileID: 5313010406716943756, guid: d7f6533e40efe1d4992ea31ac053670e, type: 3}
-  distanceMovement: 0.33
-  movimentDelay: 0.1
+  minDistanceOfMovement: 0.33
+  maxDistanceOfMovement: 1
+  minFrequencyMoviment: 0.05
 --- !u!114 &646626836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,7 +923,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.5, y: 100, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &884559482
 Transform:
@@ -933,7 +934,7 @@ Transform:
   m_GameObject: {fileID: 884559479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 23, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 40, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1597509108}
   m_RootOrder: 0
@@ -1442,7 +1443,7 @@ Transform:
   m_GameObject: {fileID: 1714682636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 40, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1597509108}
   m_RootOrder: 1
@@ -1474,7 +1475,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.5, y: 100, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1789005412
 GameObject:
