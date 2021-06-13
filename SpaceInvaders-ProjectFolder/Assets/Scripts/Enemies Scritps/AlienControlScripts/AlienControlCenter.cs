@@ -5,14 +5,16 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 {
     public AlienLineController[] alienLineControl;
 	
-	[SerializeField] float distanceMovement;
-	[SerializeField] float movimentDelay = 0.2f;
+	[SerializeField] float minDistanceOfMovement;
+	[SerializeField] float maxDistanceOfMovement;
+	[SerializeField] float minFrequencyMoviment = 0.1f;
 
 	HorizontalMovimentDirection movimentDirection = HorizontalMovimentDirection.right;
 	bool needTransition = false;
 	bool canMove = false;
 	bool isMovingY = false;
 	bool isMovingX = false;
+	float aliensLengh = 0;
 
 	enum HorizontalMovimentDirection { left = -1, right = 1 }
 
@@ -58,10 +60,21 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	{
 		isMovingX = true;
 
+		float x = (GameManager.AliensAlive / aliensLengh);
+		float a = minDistanceOfMovement - maxDistanceOfMovement;
+		float c = maxDistanceOfMovement;
+
+		float distance = a * x + c;
+
 		for (int i = alienLineControl.Length - 1; i >= 0; i--)
 		{
-			alienLineControl[i].SendMoveCommand(Vector3.right * distanceMovement * (int)movimentDirection);
-			yield return new WaitForSeconds(movimentDelay);
+			alienLineControl[i].SendMoveCommand(Vector3.right * distance * (int)movimentDirection);
+
+			float waitSeconds = (aliensLengh != 0) ?
+				minFrequencyMoviment * (GameManager.AliensAlive / aliensLengh) :
+				minFrequencyMoviment;
+
+			yield return new WaitForSeconds(waitSeconds);
 		}
 
 		isMovingX = false;
@@ -75,10 +88,21 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			HorizontalMovimentDirection.left :
 			HorizontalMovimentDirection.right;
 
+		float x = (GameManager.AliensAlive / aliensLengh);
+		float a = minDistanceOfMovement - maxDistanceOfMovement;
+		float c = maxDistanceOfMovement;
+
+		float distance = a * x + c;
+
 		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{
-			alienLineControl[i].SendMoveCommand(-Vector3.up * distanceMovement); 
-			yield return new WaitForSeconds(movimentDelay);
+			alienLineControl[i].SendMoveCommand(-Vector3.up * distance);
+			
+			float waitSeconds = (aliensLengh != 0) ? 
+				minFrequencyMoviment * (GameManager.AliensAlive / aliensLengh) : 
+				minFrequencyMoviment;
+
+			yield return new WaitForSeconds(waitSeconds);
 		}
 		
 		needTransition = false;
@@ -104,6 +128,8 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 	void HandleFinishedSpawningAliens()
     {
+		aliensLengh = GameManager.AliensAlive;
+		Debug.Log(aliensLengh);
 		canMove = true;
     }
 
