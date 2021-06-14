@@ -17,6 +17,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	float aliensLengh = 0;
 
 	enum HorizontalMovimentDirection { left = -1, right = 1 }
+	GameManager gameManager;
 
     #region Standard Unity Methods
 
@@ -36,7 +37,9 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 		AlienSpawner.OnFinishedSpawningAliens -= HandleFinishedSpawningAliens;
 	}
 
-	void Update() => MovimentBehaviour();
+	void Start() => gameManager = FindObjectOfType<GameManager>();
+
+    void Update() => MovimentBehaviour();
 
 	#endregion
 
@@ -60,7 +63,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	{
 		isMovingX = true;
 
-		float x = (GameManager.AliensAlive / aliensLengh);
+		float x = (GameManager.Instance.AliensAlive / aliensLengh);
 		float a = minDistanceOfMovement - maxDistanceOfMovement;
 		float c = maxDistanceOfMovement;
 
@@ -71,7 +74,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			alienLineControl[i].SendMoveCommand(Vector3.right * distance * (int)movimentDirection);
 
 			float waitSeconds = (aliensLengh != 0) ?
-				minFrequencyMoviment * (GameManager.AliensAlive / aliensLengh) :
+				minFrequencyMoviment * (gameManager.AliensAlive / aliensLengh) :
 				minFrequencyMoviment;
 
 			yield return new WaitForSeconds(waitSeconds);
@@ -88,18 +91,18 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			HorizontalMovimentDirection.left :
 			HorizontalMovimentDirection.right;
 
-		float x = (GameManager.AliensAlive / aliensLengh);
+		float x = (gameManager.AliensAlive / aliensLengh);
 		float a = minDistanceOfMovement - maxDistanceOfMovement;
 		float c = maxDistanceOfMovement;
 
-		float distance = a * x + c;
+		float distance = (a * x + c) * 2;
 
 		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{
 			alienLineControl[i].SendMoveCommand(-Vector3.up * distance);
 			
 			float waitSeconds = (aliensLengh != 0) ? 
-				minFrequencyMoviment * (GameManager.AliensAlive / aliensLengh) : 
+				minFrequencyMoviment * (gameManager.AliensAlive / aliensLengh) : 
 				minFrequencyMoviment;
 
 			yield return new WaitForSeconds(waitSeconds);
@@ -128,7 +131,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 	void HandleFinishedSpawningAliens()
     {
-		aliensLengh = GameManager.AliensAlive;
+		aliensLengh = gameManager.AliensAlive;
 		Debug.Log(aliensLengh);
 		canMove = true;
     }

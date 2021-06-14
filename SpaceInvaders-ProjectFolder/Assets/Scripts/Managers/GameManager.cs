@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     bool isSpawningAliens = false;
 
 
-    public static int AliensAlive { get; private set; } = 0;
+    public int AliensAlive { get; private set; } = 0;
 
 
     public static event Action StartGame;
@@ -30,8 +30,10 @@ public class GameManager : Singleton<GameManager>
 
     #region Standard Unity Methods
 
-    void Awake()
+    protected virtual void Awake()
     {
+        base.Awake();
+
         AlienSpawner.OnStartSpawningAliens += HandleOnStartSpawningAliens;
         AlienSpawner.OnFinishedSpawningAliens += HandleOnFinishedSpawningAliens;
 
@@ -39,7 +41,7 @@ public class GameManager : Singleton<GameManager>
         AlienHealthHandler.OnAlienDie += HandleAlienDie;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         AlienSpawner.OnStartSpawningAliens -= HandleOnStartSpawningAliens;
         AlienSpawner.OnFinishedSpawningAliens -= HandleOnFinishedSpawningAliens;
