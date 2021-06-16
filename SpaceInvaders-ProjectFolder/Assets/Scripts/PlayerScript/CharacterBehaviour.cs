@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterBehaviour : MonoBehaviour
@@ -19,7 +20,9 @@ public class CharacterBehaviour : MonoBehaviour
     [Header("Combat Variables")]
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform projectileInitialPosition;
-    [SerializeField] float shotDelay;
+    [SerializeField] float shootDelay = 0.3f;
+    [SerializeField] int maximumActiveProjectilesSimultaneously = 3;
+    List<GameObject> bulletInstances = new List<GameObject>();
 
     bool CanMove = false;
     bool CanShot = false;
@@ -50,8 +53,14 @@ public class CharacterBehaviour : MonoBehaviour
 
     void HandleShotCommand()
     {
+        //Removes the projectiles that were destroyed
+        for (int i = 0; i < bulletInstances.Count; i++)
+            if (bulletInstances[i] == null)
+                bulletInstances.RemoveAt(i);
+
+        bool hasAmmo = maximumActiveProjectilesSimultaneously > bulletInstances.Count;
         bool wantToShoot = (Input.GetKey(key_Shot) || Input.GetMouseButton(0));
-        if (wantToShoot && CanShot)
+        if (wantToShoot && CanShot && hasAmmo)
             StartCoroutine(Shoot());
     }
 
@@ -92,8 +101,8 @@ public class CharacterBehaviour : MonoBehaviour
     IEnumerator Shoot()
     {
         CanShot = false;
-        Instantiate(projectilePrefab, projectileInitialPosition.position, Quaternion.identity);
-        yield return new WaitForSeconds(shotDelay);
+        bulletInstances.Add(Instantiate(projectilePrefab, projectileInitialPosition.position, Quaternion.identity));
+        yield return new WaitForSeconds(shootDelay);
         CanShot = true;
     }
 
