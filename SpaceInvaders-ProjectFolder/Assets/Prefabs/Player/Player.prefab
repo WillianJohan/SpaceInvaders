@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 8157384545478245698}
   - component: {fileID: 284103718}
   - component: {fileID: 284103719}
+  - component: {fileID: 4260987971590863858}
   - component: {fileID: 4334017742456045690}
   - component: {fileID: 374572565636387140}
   - component: {fileID: 8416529740164933534}
@@ -176,12 +177,24 @@ MonoBehaviour:
   rightMovimentLimit: {fileID: 1219711900}
   key_Left: 276
   key_Right: 275
-  key_Shot: 32
   keyboardMovimentSensitivity: 25
   mouseSensitivity: 100
+--- !u!114 &4260987971590863858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429251077707830359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d002873519d017341bb2aca99fe425f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key_Shot: 32
   projectilePrefab: {fileID: 8727960922644225773, guid: 63be9c29b5e45da4880749ebe37432a4, type: 3}
   projectileInitialPosition: {fileID: 3860993737001664368}
-  shootDelay: 0.3
+  shootDelay: 0.1
   maximumActiveProjectilesSimultaneously: 1
 --- !u!114 &4334017742456045690
 MonoBehaviour:

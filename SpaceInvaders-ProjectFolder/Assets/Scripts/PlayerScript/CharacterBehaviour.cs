@@ -11,21 +11,12 @@ public class CharacterBehaviour : MonoBehaviour
     [Header("Keyboard Input")]
     public KeyCode key_Left;
     public KeyCode key_Right;
-    public KeyCode key_Shot;
-    [SerializeField] float keyboardMovimentSensitivity;
 
-    [Header("Mouse")]
+    [Header("Movimentation Sensitivity")]
+    [SerializeField] float keyboardMovimentSensitivity;
     [SerializeField] float mouseSensitivity;
 
-    [Header("Combat Variables")]
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform projectileInitialPosition;
-    [SerializeField] float shootDelay = 0.3f;
-    [SerializeField] int maximumActiveProjectilesSimultaneously = 3;
-    List<GameObject> bulletInstances = new List<GameObject>();
-
     bool CanMove = false;
-    bool CanShot = false;
 
     #region Unity Standard Methods
 
@@ -41,30 +32,15 @@ public class CharacterBehaviour : MonoBehaviour
         GameManager.StartingNewWave -= HandleStartingNewWave;
     }
 
-    void Update()
-    {
-        HandleShotCommand();
-        HandleMovimentation();
-    }
+    void Update() => HandleMovimentationBehaviour();
 
     #endregion
 
     #region Player behaviour methods
 
-    void HandleShotCommand()
-    {
-        //Removes the projectiles that were destroyed
-        for (int i = 0; i < bulletInstances.Count; i++)
-            if (bulletInstances[i] == null)
-                bulletInstances.RemoveAt(i);
-
-        bool hasAmmo = maximumActiveProjectilesSimultaneously > bulletInstances.Count;
-        bool wantToShoot = (Input.GetKey(key_Shot) || Input.GetMouseButton(0));
-        if (wantToShoot && CanShot && hasAmmo)
-            StartCoroutine(Shoot());
-    }
-
-    void HandleMovimentation()
+    
+    //TODO: Colocar o player na posição do mouse (dentro das limitações)
+    void HandleMovimentationBehaviour()
     {
         if (!CanMove)
             return;
@@ -98,29 +74,12 @@ public class CharacterBehaviour : MonoBehaviour
         return 0;
     }
 
-    IEnumerator Shoot()
-    {
-        CanShot = false;
-        bulletInstances.Add(Instantiate(projectilePrefab, projectileInitialPosition.position, Quaternion.identity));
-        yield return new WaitForSeconds(shootDelay);
-        CanShot = true;
-    }
-
     #endregion
 
     #region Handle events methods
 
-    void HandleInitGame()
-    {
-        CanMove = true;
-        CanShot = true;
-    }
-
-    void HandleStartingNewWave() 
-    {
-        CanMove = true;
-        CanShot = false;
-    }
+    void HandleInitGame()           => CanMove = true;
+    void HandleStartingNewWave()    => CanMove = true;
 
     #endregion
 
