@@ -7,7 +7,11 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public static event Action<int> OnScoreUpdated;
 
-    void Awake()        => AlienHealthHandler.OnAlienDie += HandleAlienDie;
+    protected override void Awake()
+    {
+        base.Awake();
+        AlienHealthHandler.OnAlienDie += HandleAlienDie;
+    }
     void OnDestroy()    => AlienHealthHandler.OnAlienDie -= HandleAlienDie;
     void Start()        => CurrentScore = 0;
 

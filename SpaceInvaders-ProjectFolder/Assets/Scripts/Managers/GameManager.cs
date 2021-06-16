@@ -16,8 +16,8 @@ public class GameManager : Singleton<GameManager>
     [Header("Spawn Atributte")]
     [SerializeField] float spawnVelocity = 0.2f;
 
-    GameObject playerInstance;
-    GameObject barrierInstance;
+    public GameObject playerInstance { get; private set; }
+    public GameObject barrierInstance { get; private set; }
 
     bool isSpawningAliens = false;
 
@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
 
     #region Standard Unity Methods
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
