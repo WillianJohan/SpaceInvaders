@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2374752faf6cb448af372025a64dfd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlienLayer:
+  DetectionLayer:
     serializedVersion: 2
     m_Bits: 128
 --- !u!1 &631128767
@@ -1705,6 +1705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2374752faf6cb448af372025a64dfd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlienLayer:
+  DetectionLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
