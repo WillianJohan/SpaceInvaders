@@ -18,7 +18,7 @@ public class ProjectileBehaviour : MonoBehaviour
     
 
     enum ProjectileDirection { up = 1, down = -1}
-    Rigidbody rigidbody;
+    new Rigidbody rigidbody;
 
 
     void Start()
