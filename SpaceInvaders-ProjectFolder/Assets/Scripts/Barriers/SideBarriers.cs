@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class AlienDetectionLimit : MonoBehaviour
+public class SideBarriers : MonoBehaviour
 {
     [SerializeField] GameObject OtherBarrier;
     [SerializeField] LayerMask DetectionLayer;

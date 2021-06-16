@@ -25,14 +25,14 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
     {
 		base.Awake();
 
-		AlienDetectionLimit.AlienReachedTheLimit += HandleTransition;
+		SideBarriers.AlienReachedTheLimit += HandleTransition;
 		AlienSpawner.OnStartSpawningAliens += HandleStartSpawningAliens;
 		AlienSpawner.OnFinishedSpawningAliens += HandleFinishedSpawningAliens;
     }
 
     private void OnDestroy()
     {
-		AlienDetectionLimit.AlienReachedTheLimit -= HandleTransition;
+		SideBarriers.AlienReachedTheLimit -= HandleTransition;
 		AlienSpawner.OnStartSpawningAliens -= HandleStartSpawningAliens;
 		AlienSpawner.OnFinishedSpawningAliens -= HandleFinishedSpawningAliens;
 	}
@@ -132,7 +132,6 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	void HandleFinishedSpawningAliens()
     {
 		aliensLengh = gameManager.AliensAlive;
-		Debug.Log(aliensLengh);
 		canMove = true;
     }
 

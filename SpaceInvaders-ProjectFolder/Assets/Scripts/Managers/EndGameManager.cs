@@ -12,19 +12,44 @@ public class EndGameManager : MonoBehaviour
     [SerializeField] Text CurrentText;
 
     void Start()        => endGameScreen.SetActive(false);
-    void Awake()        => PlayerHealthHandler.OnPlayerDie += HandleOnPlayerDie;
-    void OnDestroy()    => PlayerHealthHandler.OnPlayerDie -= HandleOnPlayerDie;
+    void Awake()
+    { 
+        PlayerHealthHandler.OnPlayerDie += HandleOnPlayerDie;
+        BottomBarrier.AlienReachedTheBottomMap += HandleAlienReachedTheBottomMap;
+    }
+    void OnDestroy() 
+    {
+        PlayerHealthHandler.OnPlayerDie -= HandleOnPlayerDie;
+        BottomBarrier.AlienReachedTheBottomMap -= HandleAlienReachedTheBottomMap;
+    }
+
+    void HandleAlienReachedTheBottomMap()
+    {
+        HandleScore();
+
+        //Kill Player
+        GameObject player = FindObjectOfType<GameManager>().playerInstance;
+        player.SetActive(false);
+
+        //Habilita tela de end Game
+        StartCoroutine(ActivateEndGameScreen());
+    }
 
     void HandleOnPlayerDie()
+    {
+        HandleScore();
+
+        //Habilita tela de end Game
+        StartCoroutine(ActivateEndGameScreen());
+    }
+
+    void HandleScore()
     {
         HighScoreText.text = DataManager.LoadScore().ToString();
         CurrentText.text = ScoreManager.CurrentScore.ToString();
 
         //Save player Score
         DataManager.SaveScore(ScoreManager.CurrentScore);
-
-        //Habilita tela de end Game
-        StartCoroutine(ActivateEndGameScreen());
     }
 
     IEnumerator ActivateEndGameScreen()
