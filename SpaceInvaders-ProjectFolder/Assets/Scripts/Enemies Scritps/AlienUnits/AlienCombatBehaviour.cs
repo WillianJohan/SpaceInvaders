@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class AlienCombatBehaviour : MonoBehaviour
 
     public static bool IsEnabled = false;
 
+    public static event Action OnShoot;
+
     #region Unity Standard methods
 
     void Awake()
@@ -33,7 +36,7 @@ public class AlienCombatBehaviour : MonoBehaviour
 
     void Start()
     {
-        checkPlayerPosition_DelayTime = Random.Range(0.5f, 2);
+        checkPlayerPosition_DelayTime = UnityEngine.Random.Range(1f, 3);
         IsEnabled = false;
     }
     void Update()       => ExecuteCombatBehaviour();
@@ -67,6 +70,8 @@ public class AlienCombatBehaviour : MonoBehaviour
 
         if (((AlienLayer & 1 << hitInfo.transform.gameObject.layer) != (1 << hitInfo.transform.gameObject.layer)))
             Instantiate(projectilePrefab, projectileInitialPosition.position, Quaternion.identity);
+
+        OnShoot?.Invoke();
     }
 
     void TryKillPlayer(Collider other)

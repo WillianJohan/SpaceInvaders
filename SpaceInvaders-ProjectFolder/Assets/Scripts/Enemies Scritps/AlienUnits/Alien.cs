@@ -2,5 +2,5 @@
 
 public class Alien : MonoBehaviour
 {
-    public AlienType Type = AlienType.Type1;
+    public AlienType Type = AlienType.None;
 }

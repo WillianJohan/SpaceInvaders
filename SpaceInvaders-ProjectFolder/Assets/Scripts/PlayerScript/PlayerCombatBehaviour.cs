@@ -16,7 +16,8 @@ public class PlayerCombatBehaviour : MonoBehaviour
 
     bool CanShot = false;
 
-    public static event Action<GameObject> OnShootProjectile;
+    //public static event Action<GameObject> OnShoot;
+    public static event Action OnShoot;
 
     #region Unity Standard Methods
 
@@ -66,6 +67,7 @@ public class PlayerCombatBehaviour : MonoBehaviour
     {
         CanShot = false;
         bulletInstances.Add(Instantiate(projectilePrefab, projectileInitialPosition.position, Quaternion.identity));
+        OnShoot?.Invoke();
         yield return new WaitForSeconds(shootDelay);
         CanShot = true;
     }

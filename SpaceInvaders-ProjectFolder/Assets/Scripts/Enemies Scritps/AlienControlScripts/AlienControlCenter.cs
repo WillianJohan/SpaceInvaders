@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 	enum HorizontalMovimentDirection { left = -1, right = 1 }
 	GameManager gameManager;
+
+	public static event Action OnBeginMoviment;
 
     #region Standard Unity Methods
 
@@ -63,13 +66,15 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	{
 		isMovingX = true;
 
+		OnBeginMoviment?.Invoke();
+
 		float x = (GameManager.Instance.AliensAlive / aliensLengh);
 		float a = minDistanceOfMovement - maxDistanceOfMovement;
 		float c = maxDistanceOfMovement;
 
 		float distance = a * x + c;
 
-		for (int i = alienLineControl.Length - 1; i >= 0; i--)
+		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{
 			alienLineControl[i].MoveLine(Vector3.right * distance * (int)movimentDirection);
 
@@ -86,6 +91,8 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 	IEnumerator MoveAliensDown()
 	{
 		isMovingY = true;
+
+		OnBeginMoviment?.Invoke();
 
 		movimentDirection = (HorizontalMovimentDirection.right == movimentDirection) ?
 			HorizontalMovimentDirection.left :
