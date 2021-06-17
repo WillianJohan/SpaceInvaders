@@ -71,7 +71,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 		for (int i = alienLineControl.Length - 1; i >= 0; i--)
 		{
-			alienLineControl[i].SendMoveCommand(Vector3.right * distance * (int)movimentDirection);
+			alienLineControl[i].MoveLine(Vector3.right * distance * (int)movimentDirection);
 
 			float waitSeconds = (aliensLengh != 0) ?
 				minFrequencyMoviment * (gameManager.AliensAlive / aliensLengh) :
@@ -99,7 +99,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{
-			alienLineControl[i].SendMoveCommand(-Vector3.up * distance);
+			alienLineControl[i].MoveLine(-Vector3.up * distance);
 			
 			float waitSeconds = (aliensLengh != 0) ? 
 				minFrequencyMoviment * (gameManager.AliensAlive / aliensLengh) : 

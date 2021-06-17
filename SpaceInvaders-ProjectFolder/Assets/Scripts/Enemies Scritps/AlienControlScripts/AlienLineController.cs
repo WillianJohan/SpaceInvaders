@@ -6,17 +6,11 @@ using UnityEngine;
 public class AlienLineController
 {
 	public GameObject AlienPrefab;
-	List<AlienCommandReceiver> alienList = new List<AlienCommandReceiver>();
+	public event Action<Vector3> OnMoveCommand;
 
-	public void SendMoveCommand(Vector3 direction)
+	public void MoveLine(Vector3 direction)
 	{
-		for(int i = 0; i < alienList.Count; i++)
-        {
-			if (alienList[i] != null)
-				alienList[i]?.Move(direction);
-			else
-				alienList.RemoveAt(i);
-        }
+		OnMoveCommand?.Invoke(direction);
 	}
 
 	public void AddAlien(GameObject alienInstance)
@@ -24,6 +18,6 @@ public class AlienLineController
 		if (!alienInstance.TryGetComponent<AlienCommandReceiver>(out AlienCommandReceiver commandReceiver))
 			return;
 
-		alienList.Add(commandReceiver);
+		commandReceiver.AssignController(this);
 	}
 }

@@ -194,8 +194,8 @@ MonoBehaviour:
   key_Shot: 32
   projectilePrefab: {fileID: 8727960922644225773, guid: 63be9c29b5e45da4880749ebe37432a4, type: 3}
   projectileInitialPosition: {fileID: 3860993737001664368}
-  shootDelay: 0.1
-  maximumActiveProjectilesSimultaneously: 1
+  shootDelay: 0.2
+  maximumActiveProjectilesSimultaneously: 2
 --- !u!114 &4334017742456045690
 MonoBehaviour:
   m_ObjectHideFlags: 0
