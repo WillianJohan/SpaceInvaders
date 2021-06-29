@@ -14,6 +14,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] List<AudioClip> SpawnElementAudioClips = new List<AudioClip>();
     [SerializeField] List<AudioClip> PlayerHitAudioClips = new List<AudioClip>();
     [SerializeField] List<AudioClip> EndGameAudioClips = new List<AudioClip>();
+    [SerializeField] List<AudioClip> AnyButtonAudioClips = new List<AudioClip>();
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource PlayerLaserShootSource;
@@ -25,6 +26,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] AudioSource PlayerHitSource;
     [SerializeField] AudioSource SpawnElementSource;
     [SerializeField] AudioSource EndGameSource;
+    [SerializeField] AudioSource AnyButtonSource;
 
     #region Standard Methods
 
@@ -40,6 +42,7 @@ public class AudioManager : Singleton<AudioManager>
         EndGameManager.EndGame += HandleOnEndGame;
         PlayerHealthHandler.OnPlayerHit += HandleOnPlayerHit;
         GameManager.StartingNewWave += HandleOnNewWave;
+        StartMenu.AnyButtonLoadScene.OnAnyButtonPressed += HandleAnyButton;
 
         //SpawnElementSource;
     }
@@ -54,6 +57,7 @@ public class AudioManager : Singleton<AudioManager>
         EndGameManager.EndGame -= HandleOnEndGame;
         PlayerHealthHandler.OnPlayerHit -= HandleOnPlayerHit;
         GameManager.StartingNewWave -= HandleOnNewWave;
+        StartMenu.AnyButtonLoadScene.OnAnyButtonPressed -= HandleAnyButton;
 
         //SpawnElementSource;
     }
@@ -82,6 +86,7 @@ public class AudioManager : Singleton<AudioManager>
     void PlayEndGameSound() => PlayRandomSound(EndGameSource, EndGameAudioClips);
     void PlayPlayerHitSound() => PlayRandomSound(PlayerHitSource, PlayerHitAudioClips);
     void PlayNewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
+    void PlayAnyButtonSound() => PlayRandomSound(AnyButtonSource, AnyButtonAudioClips);
 
     #endregion
 
@@ -96,6 +101,6 @@ public class AudioManager : Singleton<AudioManager>
     void HandleOnEndGame() => PlayEndGameSound();
     void HandleOnPlayerHit() => PlayPlayerHitSound();
     void HandleOnNewWave() => PlayNewWaveSound();
-
+    void HandleAnyButton() => PlayAnyButtonSound();
     #endregion
 }
