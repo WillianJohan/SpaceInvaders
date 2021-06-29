@@ -31,6 +31,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 		SideBarriers.AlienReachedTheLimit += HandleTransition;
 		AlienSpawner.OnStartSpawningAliens += HandleStartSpawningAliens;
 		AlienSpawner.OnFinishedSpawningAliens += HandleFinishedSpawningAliens;
+		EndGameManager.EndGame += HandleEndGame;
     }
 
     private void OnDestroy()
@@ -38,6 +39,7 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 		SideBarriers.AlienReachedTheLimit -= HandleTransition;
 		AlienSpawner.OnStartSpawningAliens -= HandleStartSpawningAliens;
 		AlienSpawner.OnFinishedSpawningAliens -= HandleFinishedSpawningAliens;
+		EndGameManager.EndGame -= HandleEndGame;
 	}
 
 	void Start() => gameManager = FindObjectOfType<GameManager>();
@@ -140,6 +142,12 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
     {
 		aliensLengh = gameManager.AliensAlive;
 		canMove = true;
+    }
+
+	void HandleEndGame()
+    {
+		StopAllCoroutines();
+		canMove = false;
     }
 
 	#endregion

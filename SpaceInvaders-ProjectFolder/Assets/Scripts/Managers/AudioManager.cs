@@ -10,15 +10,21 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] List<AudioClip> HitAudioClips = new List<AudioClip>();
     [SerializeField] List<AudioClip> ExplosionAudioClips = new List<AudioClip>();
     [SerializeField] List<AudioClip> AlienMovimentAudioClips = new List<AudioClip>();
-    [SerializeField] List<AudioClip> PowerUpAudioClips = new List<AudioClip>();
+    [SerializeField] List<AudioClip> NewWaveAudioClips = new List<AudioClip>();
+    [SerializeField] List<AudioClip> SpawnElementAudioClips = new List<AudioClip>();
+    [SerializeField] List<AudioClip> PlayerHitAudioClips = new List<AudioClip>();
+    [SerializeField] List<AudioClip> EndGameAudioClips = new List<AudioClip>();
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource PlayerLaserShootSource;
     [SerializeField] AudioSource AlienLaserShootSource;
-    [SerializeField] AudioSource HitSource;
+    [SerializeField] AudioSource ProjectileHitSource;
     [SerializeField] AudioSource ExplosionSource;
     [SerializeField] AudioSource AlienMovimentSource;
-    [SerializeField] AudioSource PowerUpSource;
+    [SerializeField] AudioSource NewWaveSource;
+    [SerializeField] AudioSource PlayerHitSorce;
+    [SerializeField] AudioSource SpawnElementSource;
+    [SerializeField] AudioSource EndGameSource;
 
     #region Standard Methods
 
@@ -31,7 +37,11 @@ public class AudioManager : Singleton<AudioManager>
         AlienControlCenter.OnBeginMoviment += HandleOnAlienBeginMovimet;
         AlienCombatBehaviour.OnShoot += HandleOnAlienShoot;
         PlayerCombatBehaviour.OnShoot += HandleOnPlayerShoot;
+        EndGameManager.EndGame += HandleOnEndGame;
 
+        //PowerUpSource;
+        //PlayerHitSorce;
+        //SpawnElementSource;
     }
 
     void OnDestroy()
@@ -41,6 +51,11 @@ public class AudioManager : Singleton<AudioManager>
         AlienControlCenter.OnBeginMoviment -= HandleOnAlienBeginMovimet;
         AlienCombatBehaviour.OnShoot -= HandleOnAlienShoot;
         PlayerCombatBehaviour.OnShoot -= HandleOnPlayerShoot;
+        EndGameManager.EndGame -= HandleOnEndGame;
+
+        //PowerUpSource;
+        //PlayerHitSorce;
+        //SpawnElementSource;
     }
 
     #endregion
@@ -49,6 +64,9 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayRandomSound(AudioSource source, List<AudioClip> audioClipList)
     {
+        if (audioClipList.Count == 0)
+            return;
+
         int i = Random.Range(0, audioClipList.Count - 1);
         source.clip = audioClipList[i];
         source.Play();
@@ -56,10 +74,12 @@ public class AudioManager : Singleton<AudioManager>
 
     void PlayPlayerShoot() => PlayRandomSound(PlayerLaserShootSource, PlayerLaserShootAudioClips);
     void PlayAlienShoot() => PlayRandomSound(AlienLaserShootSource, AlienLaserShootAudioClips);
-    void PlayHit() => PlayRandomSound(HitSource, HitAudioClips);
+    void PlayHit() => PlayRandomSound(ProjectileHitSource, HitAudioClips);
     void PlayExplosion() => PlayRandomSound(ExplosionSource, ExplosionAudioClips);
     void PlayAlienMoviment() => PlayRandomSound(AlienMovimentSource, AlienMovimentAudioClips);
-    void PlayPowerUp() => PlayRandomSound(PowerUpSource, PowerUpAudioClips);
+    void NewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
+    void PlaySpawnSound() => PlayRandomSound(SpawnElementSource, SpawnElementAudioClips);
+    void PlayEndGameSound() => PlayRandomSound(EndGameSource, EndGameAudioClips);
 
     #endregion
 
@@ -70,6 +90,8 @@ public class AudioManager : Singleton<AudioManager>
     void HandleOnPlayerShoot() => PlayPlayerShoot();
     void HandleOnAlienShoot() => PlayAlienShoot();
     void HandleOnAlienBeginMovimet() => PlayAlienMoviment();
+    void HandleOnSpawnElement() => PlaySpawnSound();
+    void HandleOnEndGame() => PlayEndGameSound();
 
     #endregion
 }

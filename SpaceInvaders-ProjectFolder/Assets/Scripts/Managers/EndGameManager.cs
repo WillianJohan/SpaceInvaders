@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,21 +12,26 @@ public class EndGameManager : MonoBehaviour
     [SerializeField] Text HighScoreText;
     [SerializeField] Text CurrentText;
 
+    public static event Action EndGame;
+
+
     void Start()        => endGameScreen.SetActive(false);
     void Awake()
     { 
-        PlayerHealthHandler.OnPlayerDie += HandleOnPlayerDie;
-        BottomBarrier.AlienReachedTheBottomMap += HandleAlienReachedTheBottomMap;
+        PlayerHealthHandler.OnPlayerDie += HandleEndGame;
+        BottomBarrier.AlienReachedTheBottomMap += HandleEndGame;
     }
     void OnDestroy() 
     {
-        PlayerHealthHandler.OnPlayerDie -= HandleOnPlayerDie;
-        BottomBarrier.AlienReachedTheBottomMap -= HandleAlienReachedTheBottomMap;
+        PlayerHealthHandler.OnPlayerDie -= HandleEndGame;
+        BottomBarrier.AlienReachedTheBottomMap -= HandleEndGame;
     }
 
-    void HandleAlienReachedTheBottomMap()
+    void HandleEndGame()
     {
-        HandleScore();
+        EndGame?.Invoke();
+
+        SaveScore();
 
         //Kill Player
         GameObject player = FindObjectOfType<GameManager>().playerInstance;
@@ -35,15 +41,7 @@ public class EndGameManager : MonoBehaviour
         StartCoroutine(ActivateEndGameScreen());
     }
 
-    void HandleOnPlayerDie()
-    {
-        HandleScore();
-
-        //Habilita tela de end Game
-        StartCoroutine(ActivateEndGameScreen());
-    }
-
-    void HandleScore()
+    void SaveScore()
     {
         HighScoreText.text = DataManager.LoadScore().ToString();
         CurrentText.text = ScoreManager.CurrentScore.ToString();
