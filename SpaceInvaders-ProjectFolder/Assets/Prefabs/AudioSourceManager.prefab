@@ -352,7 +352,8 @@ MonoBehaviour:
   PlayerHitAudioClips:
   - {fileID: 8300000, guid: b882b8468d1e8a14aa4e0926aa0a4b05, type: 3}
   - {fileID: 8300000, guid: 25449364418fe48499450be2daca63d0, type: 3}
-  EndGameAudioClips: []
+  EndGameAudioClips:
+  - {fileID: 8300000, guid: 87b1747fa5ea34744b0468c9e14f7135, type: 3}
   AnyButtonAudioClips:
   - {fileID: 8300000, guid: 9e0a82c801a064840a82dbd4406e629c, type: 3}
   - {fileID: 8300000, guid: cde3610378ceb3347871294c1d82a2f9, type: 3}
@@ -664,8 +665,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
-  m_Pitch: 1.32
+  m_Volume: 0.253
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1299,7 +1300,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.417
   m_Pitch: 1
   Loop: 0
   Mute: 0

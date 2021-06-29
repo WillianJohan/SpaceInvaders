@@ -9,13 +9,14 @@ namespace StartMenu
     {
 
         [SerializeField] int sceneIndexToLoad = 1;
-
+        bool alreadyPressed = false;
         public static event Action OnAnyButtonPressed;
 
         void Update()
         {
-            if (Input.anyKey)
+            if (Input.anyKey && !alreadyPressed)
             {
+                alreadyPressed = true;
                 OnAnyButtonPressed?.Invoke();
                 StartCoroutine(LoadScene());
             }
