@@ -39,6 +39,7 @@ public class AudioManager : Singleton<AudioManager>
         PlayerCombatBehaviour.OnShoot += HandleOnPlayerShoot;
         EndGameManager.EndGame += HandleOnEndGame;
         PlayerHealthHandler.OnPlayerHit += HandleOnPlayerHit;
+        GameManager.StartingNewWave += HandleOnNewWave;
 
         //PowerUpSource;
         //SpawnElementSource;
@@ -53,7 +54,8 @@ public class AudioManager : Singleton<AudioManager>
         PlayerCombatBehaviour.OnShoot -= HandleOnPlayerShoot;
         EndGameManager.EndGame -= HandleOnEndGame;
         PlayerHealthHandler.OnPlayerHit -= HandleOnPlayerHit;
-        
+        GameManager.StartingNewWave -= HandleOnNewWave;
+
         //PowerUpSource;
         //SpawnElementSource;
     }
@@ -81,6 +83,7 @@ public class AudioManager : Singleton<AudioManager>
     void PlaySpawnSound() => PlayRandomSound(SpawnElementSource, SpawnElementAudioClips);
     void PlayEndGameSound() => PlayRandomSound(EndGameSource, EndGameAudioClips);
     void PlayPlayerHitSound() => PlayRandomSound(PlayerHitSource, PlayerHitAudioClips);
+    void PlayNewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
 
     #endregion
 
@@ -94,6 +97,7 @@ public class AudioManager : Singleton<AudioManager>
     void HandleOnSpawnElement() => PlaySpawnSound();
     void HandleOnEndGame() => PlayEndGameSound();
     void HandleOnPlayerHit() => PlayPlayerHitSound();
+    void HandleOnNewWave() => PlayNewWaveSound();
 
     #endregion
 }
