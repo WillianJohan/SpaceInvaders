@@ -1509,8 +1509,8 @@ MonoBehaviour:
   - AlienPrefab: {fileID: 7785988615819380265, guid: f73e717d0480aec47b71c3a830891cf9, type: 3}
   - AlienPrefab: {fileID: 6183926011913903958, guid: 56231868595773f438353310af88e7e5, type: 3}
   minDistanceOfMovement: 0.2
-  maxDistanceOfMovement: 1
-  minFrequencyMoviment: 0.1
+  maxDistanceOfMovement: 0.8
+  minFrequencyMoviment: 0.115
 --- !u!114 &646626836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2647,7 +2647,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e2a14afba90025149be2bd44e24a64b8, type: 3}
   - {fileID: 8300000, guid: b144da9660d857f4db2f6c4ad1539a32, type: 3}
   - {fileID: 8300000, guid: 9d7727be36adc2b4e8e4e6925fc4dd31, type: 3}
-  NewWaveAudioClips: []
+  NewWaveAudioClips:
+  - {fileID: 8300000, guid: 143ad8a852ab1d04488b5982be0fe58e, type: 3}
+  - {fileID: 8300000, guid: 195c30e8f78fcbb4e904b90daf2979de, type: 3}
+  - {fileID: 8300000, guid: 93b4c07294927254b9560284c72ef1f9, type: 3}
+  - {fileID: 8300000, guid: a129c5efcab7b10428099c91006e42ef, type: 3}
+  - {fileID: 8300000, guid: 4b110b72e4f983d4ca2d6c287b2c0ec1, type: 3}
   SpawnElementAudioClips: []
   PlayerHitAudioClips:
   - {fileID: 8300000, guid: b882b8468d1e8a14aa4e0926aa0a4b05, type: 3}
