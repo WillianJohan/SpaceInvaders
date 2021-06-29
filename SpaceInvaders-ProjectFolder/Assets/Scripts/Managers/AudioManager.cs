@@ -41,7 +41,6 @@ public class AudioManager : Singleton<AudioManager>
         PlayerHealthHandler.OnPlayerHit += HandleOnPlayerHit;
         GameManager.StartingNewWave += HandleOnNewWave;
 
-        //PowerUpSource;
         //SpawnElementSource;
     }
 
@@ -56,7 +55,6 @@ public class AudioManager : Singleton<AudioManager>
         PlayerHealthHandler.OnPlayerHit -= HandleOnPlayerHit;
         GameManager.StartingNewWave -= HandleOnNewWave;
 
-        //PowerUpSource;
         //SpawnElementSource;
     }
 
@@ -66,7 +64,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayRandomSound(AudioSource source, List<AudioClip> audioClipList)
     {
-        if (audioClipList.Count == 0)
+        if (audioClipList.Count == 0 || source == null)
             return;
 
         int i = Random.Range(0, audioClipList.Count - 1);
