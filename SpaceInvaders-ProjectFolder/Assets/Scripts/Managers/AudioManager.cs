@@ -82,7 +82,7 @@ public class AudioManager : Singleton<AudioManager>
     void PlayExplosion() => PlayRandomSound(ExplosionSource, ExplosionAudioClips);
     void PlayAlienMoviment() => PlayRandomSound(AlienMovimentSource, AlienMovimentAudioClips);
     void NewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
-    void PlaySpawnSound() => PlayRandomSound(SpawnElementSource, SpawnElementAudioClips);
+    void PlaySpawnElementSound() => PlayRandomSound(SpawnElementSource, SpawnElementAudioClips);
     void PlayEndGameSound() => PlayRandomSound(EndGameSource, EndGameAudioClips);
     void PlayPlayerHitSound() => PlayRandomSound(PlayerHitSource, PlayerHitAudioClips);
     void PlayNewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
@@ -97,7 +97,7 @@ public class AudioManager : Singleton<AudioManager>
     void HandleOnPlayerShoot() => PlayPlayerShoot();
     void HandleOnAlienShoot() => PlayAlienShoot();
     void HandleOnAlienBeginMovimet() => PlayAlienMoviment();
-    void HandleOnSpawnElement() => PlaySpawnSound();
+    void HandleOnSpawnElement() => PlaySpawnElementSound();
     void HandleOnEndGame() => PlayEndGameSound();
     void HandleOnPlayerHit() => PlayPlayerHitSound();
     void HandleOnNewWave() => PlayNewWaveSound();
