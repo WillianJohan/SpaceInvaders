@@ -22,7 +22,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] AudioSource ExplosionSource;
     [SerializeField] AudioSource AlienMovimentSource;
     [SerializeField] AudioSource NewWaveSource;
-    [SerializeField] AudioSource PlayerHitSorce;
+    [SerializeField] AudioSource PlayerHitSource;
     [SerializeField] AudioSource SpawnElementSource;
     [SerializeField] AudioSource EndGameSource;
 
@@ -38,9 +38,9 @@ public class AudioManager : Singleton<AudioManager>
         AlienCombatBehaviour.OnShoot += HandleOnAlienShoot;
         PlayerCombatBehaviour.OnShoot += HandleOnPlayerShoot;
         EndGameManager.EndGame += HandleOnEndGame;
+        PlayerHealthHandler.OnPlayerHit += HandleOnPlayerHit;
 
         //PowerUpSource;
-        //PlayerHitSorce;
         //SpawnElementSource;
     }
 
@@ -52,9 +52,9 @@ public class AudioManager : Singleton<AudioManager>
         AlienCombatBehaviour.OnShoot -= HandleOnAlienShoot;
         PlayerCombatBehaviour.OnShoot -= HandleOnPlayerShoot;
         EndGameManager.EndGame -= HandleOnEndGame;
-
+        PlayerHealthHandler.OnPlayerHit -= HandleOnPlayerHit;
+        
         //PowerUpSource;
-        //PlayerHitSorce;
         //SpawnElementSource;
     }
 
@@ -80,6 +80,7 @@ public class AudioManager : Singleton<AudioManager>
     void NewWaveSound() => PlayRandomSound(NewWaveSource, NewWaveAudioClips);
     void PlaySpawnSound() => PlayRandomSound(SpawnElementSource, SpawnElementAudioClips);
     void PlayEndGameSound() => PlayRandomSound(EndGameSource, EndGameAudioClips);
+    void PlayPlayerHitSound() => PlayRandomSound(PlayerHitSource, PlayerHitAudioClips);
 
     #endregion
 
@@ -92,6 +93,7 @@ public class AudioManager : Singleton<AudioManager>
     void HandleOnAlienBeginMovimet() => PlayAlienMoviment();
     void HandleOnSpawnElement() => PlaySpawnSound();
     void HandleOnEndGame() => PlayEndGameSound();
+    void HandleOnPlayerHit() => PlayPlayerHitSound();
 
     #endregion
 }

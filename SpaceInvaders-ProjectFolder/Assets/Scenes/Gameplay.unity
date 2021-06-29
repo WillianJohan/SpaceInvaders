@@ -1564,7 +1564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3548419, y: 0.0112768505}
   m_AnchorMax: {x: 0.64271027, y: 1}
-  m_AnchoredPosition: {x: 2, y: -6.000122}
+  m_AnchoredPosition: {x: 2, y: -6.0001526}
   m_SizeDelta: {x: 1386, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &740146898
@@ -2051,7 +2051,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.408
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2649,7 +2649,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9d7727be36adc2b4e8e4e6925fc4dd31, type: 3}
   NewWaveAudioClips: []
   SpawnElementAudioClips: []
-  PlayerHitAudioClips: []
+  PlayerHitAudioClips:
+  - {fileID: 8300000, guid: b882b8468d1e8a14aa4e0926aa0a4b05, type: 3}
+  - {fileID: 8300000, guid: 25449364418fe48499450be2daca63d0, type: 3}
   EndGameAudioClips: []
   PlayerLaserShootSource: {fileID: 1432489003}
   AlienLaserShootSource: {fileID: 1782518726}
@@ -2657,7 +2659,7 @@ MonoBehaviour:
   ExplosionSource: {fileID: 390022428}
   AlienMovimentSource: {fileID: 164247511}
   NewWaveSource: {fileID: 242760280}
-  PlayerHitSorce: {fileID: 1082048653}
+  PlayerHitSource: {fileID: 1082048653}
   SpawnElementSource: {fileID: 148616142}
   EndGameSource: {fileID: 919738275}
 --- !u!4 &1761733895
