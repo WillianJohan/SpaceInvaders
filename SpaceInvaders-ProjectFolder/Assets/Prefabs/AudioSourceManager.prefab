@@ -346,7 +346,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 93b4c07294927254b9560284c72ef1f9, type: 3}
   - {fileID: 8300000, guid: a129c5efcab7b10428099c91006e42ef, type: 3}
   - {fileID: 8300000, guid: 4b110b72e4f983d4ca2d6c287b2c0ec1, type: 3}
-  SpawnElementAudioClips: []
+  SpawnElementAudioClips:
+  - {fileID: 8300000, guid: ee2910db47762044c8e2b596dc68ab4f, type: 3}
+  - {fileID: 8300000, guid: 62f0acdc5db40104c85d73c356cbe49c, type: 3}
   PlayerHitAudioClips:
   - {fileID: 8300000, guid: b882b8468d1e8a14aa4e0926aa0a4b05, type: 3}
   - {fileID: 8300000, guid: 25449364418fe48499450be2daca63d0, type: 3}
@@ -663,7 +665,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.2
-  m_Pitch: 1
+  m_Pitch: 1.32
   Loop: 0
   Mute: 0
   Spatialize: 0

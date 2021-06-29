@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     public static event Action StartGame;
     public static event Action StartingNewWave;
+    public static event Action OnSpawnElement;
 
     #region Standard Unity Methods
 
@@ -62,15 +63,20 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(0.5f);
 
         //Player Spawn
+        OnSpawnElement?.Invoke();
         playerInstance = Instantiate(playerPrefab, playerSpawnLocation.position, Quaternion.identity);
-        yield return new WaitForSeconds(spawnVelocity);
         
+        yield return new WaitForSeconds(spawnVelocity);
+
         //Barrier Spawn
+        OnSpawnElement?.Invoke();
         barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
+        
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn
         alienSpawner.SpawnAliens();
+        
 
         while (isSpawningAliens)
             yield return new WaitForSeconds(0.1f);
@@ -91,6 +97,7 @@ public class GameManager : Singleton<GameManager>
 
         //instantiate a new Barrier
         barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
+        OnSpawnElement?.Invoke();
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn

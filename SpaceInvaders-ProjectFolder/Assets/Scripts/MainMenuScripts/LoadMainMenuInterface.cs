@@ -15,6 +15,8 @@ namespace StartMenu
         [SerializeField] TextMesh HiScoreText;
         [SerializeField] LoadInfo []AlienScorePoints;
 
+        public static event Action OnSpawnElement;
+
         #region LoadInfo Struct
 
         [Serializable]
@@ -54,6 +56,7 @@ namespace StartMenu
             foreach (GameObject item in objectsToActivate)
             {
                 item.SetActive(true);
+                OnSpawnElement?.Invoke();
                 yield return new WaitForSeconds(delay);
             }
             

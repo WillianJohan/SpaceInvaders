@@ -43,8 +43,8 @@ public class AudioManager : Singleton<AudioManager>
         PlayerHealthHandler.OnPlayerHit += HandleOnPlayerHit;
         GameManager.StartingNewWave += HandleOnNewWave;
         StartMenu.AnyButtonLoadScene.OnAnyButtonPressed += HandleAnyButton;
-
-        //SpawnElementSource;
+        StartMenu.LoadMainMenuInterface.OnSpawnElement += HandleOnSpawnElement;
+        GameManager.OnSpawnElement += HandleOnSpawnElement;
     }
 
     void OnDestroy()
@@ -58,8 +58,8 @@ public class AudioManager : Singleton<AudioManager>
         PlayerHealthHandler.OnPlayerHit -= HandleOnPlayerHit;
         GameManager.StartingNewWave -= HandleOnNewWave;
         StartMenu.AnyButtonLoadScene.OnAnyButtonPressed -= HandleAnyButton;
-
-        //SpawnElementSource;
+        StartMenu.LoadMainMenuInterface.OnSpawnElement -= HandleOnSpawnElement;
+        GameManager.OnSpawnElement -= HandleOnSpawnElement;
     }
 
     #endregion
