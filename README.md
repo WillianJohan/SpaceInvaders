@@ -1,7 +1,7 @@
 # SpaceInvaders
 
 ###### TODO LIST:
- - [ ] Fazer a camera tremer quando recebe dano
+ - [x] Fazer a camera tremer quando recebe dano
  - [ ] Spawn do Boss
  - [ ] Menu de pausa com as seguintes opções:
  - Continue
