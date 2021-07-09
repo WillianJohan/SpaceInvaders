@@ -1,7 +1,16 @@
 # SpaceInvaders
 
-### Work in progres...  〜(￣▽￣〜)
+###### TODO LIST:
+ - [ ] Fazer a camera tremer quando recebe dano
+ - [ ] Spawn do Boss
+ - [ ] Menu de pausa com as seguintes opções:
+ - Continue
+ - Restart
+ - Options
+   - Reset HI-Score
+   - Back
+ - Quit
 
 ---
 
-###### Made with Unity 2020.3.8f1 and Universal Render Pipeline (URP)
+###### Made with Unity 2020.3.11f1 and Universal Render Pipeline (URP)
