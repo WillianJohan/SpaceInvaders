@@ -12,6 +12,10 @@ public class GameManager : Singleton<GameManager>
     [Header("Spawn Reference")]
     [SerializeField] Transform playerSpawnLocation;
     [SerializeField] Transform barrierSpawnLocation;
+    [SerializeField] Transform AlienSpawnLocation;
+    [SerializeField] Transform BossSpawnLocation;
+
+    [Header("SpawnerController")]
     [SerializeField] AlienSpawner alienSpawner;
 
     [Header("Spawn Atributte")]
@@ -76,7 +80,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn
-        alienSpawner.SpawnAliens();
+        alienSpawner.SpawnAliens(AlienSpawnLocation);
         
 
         while (isSpawningAliens)
@@ -111,7 +115,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn
-        alienSpawner.SpawnAliens();
+        alienSpawner.SpawnAliens(AlienSpawnLocation);
 
         while (isSpawningAliens)
             yield return new WaitForSeconds(0.1f);
