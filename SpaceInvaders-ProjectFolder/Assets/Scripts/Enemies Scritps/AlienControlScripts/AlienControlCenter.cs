@@ -5,10 +5,15 @@ using UnityEngine;
 public class AlienControlCenter : Singleton<AlienControlCenter>
 {
     public AlienLineController[] alienLineControl;
-	
-	[SerializeField] float minDistanceOfMovement;
-	[SerializeField] float maxDistanceOfMovement;
 	[SerializeField] float minFrequencyMoviment = 0.1f;
+
+	[Header("Horizontal Distance")]
+	[SerializeField] float minHorizontalDistanceOfMovement = 0.1f;
+	[SerializeField] float maxHorizontalDistanceOfMovement = 1.5f;
+	
+	[Header("Vertical Distance")]
+	[SerializeField] float minVerticalDistanceOfMovement = 1.0f;
+	[SerializeField] float maxVerticalDistanceOfMovement = 1.8f;
 
 	HorizontalMovimentDirection movimentDirection = HorizontalMovimentDirection.right;
 	bool needTransition = false;
@@ -70,9 +75,9 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 		OnBeginMoviment?.Invoke();
 
-		float x = (GameManager.Instance.AliensAlive / aliensLengh);
-		float a = minDistanceOfMovement - maxDistanceOfMovement;
-		float c = maxDistanceOfMovement;
+		float x = (gameManager.AliensAlive / aliensLengh);
+		float a = minHorizontalDistanceOfMovement - maxHorizontalDistanceOfMovement;
+		float c = maxHorizontalDistanceOfMovement;
 
 		float distance = a * x + c;
 
@@ -101,10 +106,10 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 			HorizontalMovimentDirection.right;
 
 		float x = (gameManager.AliensAlive / aliensLengh);
-		float a = minDistanceOfMovement - maxDistanceOfMovement;
-		float c = maxDistanceOfMovement;
+		float a = minVerticalDistanceOfMovement - maxVerticalDistanceOfMovement;
+		float c = maxVerticalDistanceOfMovement;
 
-		float distance = (a * x + c) * 2;
+		float distance = a * x + c;
 
 		for (int i = 0; i <= alienLineControl.Length - 1; i++)
 		{

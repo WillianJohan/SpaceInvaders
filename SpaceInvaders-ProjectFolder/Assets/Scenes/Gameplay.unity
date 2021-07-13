@@ -873,9 +873,11 @@ MonoBehaviour:
   - AlienPrefab: {fileID: 7785988615819380265, guid: f73e717d0480aec47b71c3a830891cf9, type: 3}
   - AlienPrefab: {fileID: 7785988615819380265, guid: f73e717d0480aec47b71c3a830891cf9, type: 3}
   - AlienPrefab: {fileID: 6183926011913903958, guid: 56231868595773f438353310af88e7e5, type: 3}
-  minDistanceOfMovement: 0.2
-  maxDistanceOfMovement: 0.8
-  minFrequencyMoviment: 0.115
+  minFrequencyMoviment: 0.1
+  minHorizontalDistanceOfMovement: 0.1
+  maxHorizontalDistanceOfMovement: 1.3
+  minVerticalDistanceOfMovement: 1
+  maxVerticalDistanceOfMovement: 1.8
 --- !u!114 &646626836
 MonoBehaviour:
   m_ObjectHideFlags: 0
