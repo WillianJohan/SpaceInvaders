@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 4334017742456045690}
+  lifeCountValue: {fileID: 2301553829180091398}
 --- !u!114 &8416529740164933534
 MonoBehaviour:
   m_ObjectHideFlags: 0

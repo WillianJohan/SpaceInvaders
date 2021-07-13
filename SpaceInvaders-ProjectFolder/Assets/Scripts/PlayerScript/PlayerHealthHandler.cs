@@ -11,6 +11,9 @@ public class PlayerHealthHandler : MonoBehaviour
     public static event Action OnPlayerSpawn;
 
 
+    [Header("UI Components")]
+    [SerializeField] TextMesh lifeCountValue;
+
     void Awake() 
     { 
         health.OnDie += HandleDie;
@@ -21,10 +24,19 @@ public class PlayerHealthHandler : MonoBehaviour
         health.OnDie -= HandleDie;
         health.OnDamage -= HandleOnDamage;
     }
-    void Start()        => OnPlayerSpawn?.Invoke();
+    void Start()
+    { 
+        OnPlayerSpawn?.Invoke();
+        lifeCountValue.text = health.CurrentHealth.ToString();
+    }
 
 
-    void HandleOnDamage() => OnPlayerHit?.Invoke();
+
+    void HandleOnDamage()
+    {
+        OnPlayerHit?.Invoke();
+        lifeCountValue.text = health.CurrentHealth.ToString();
+    }
     void HandleDie()
     {
         OnPlayerDie?.Invoke();
