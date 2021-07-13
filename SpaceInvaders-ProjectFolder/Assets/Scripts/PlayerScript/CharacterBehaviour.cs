@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterBehaviour : MonoBehaviour
@@ -14,10 +12,9 @@ public class CharacterBehaviour : MonoBehaviour
 
     [Header("Movimentation Sensitivity")]
     [SerializeField] float keyboardMovimentSensitivity;
-    [SerializeField] float mouseSensitivity;
 
     bool CanMove = false;
-    Camera camera;
+    Camera mainCamera;
 
     #region Unity Standard Methods
 
@@ -35,7 +32,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     void Start()
     {
-        camera = FindObjectOfType<Camera>();
+        mainCamera = FindObjectOfType<Camera>();
     }
 
     void Update() => HandleMovimentationBehaviour();
@@ -53,7 +50,7 @@ public class CharacterBehaviour : MonoBehaviour
         bool isMouseMoving = (Input.GetAxis("Mouse X") != 0);
         if (isMouseMoving)
         {
-            Vector3 newPosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 newPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             MoveCharacterToPosition(newPosition);
             return;
         }
