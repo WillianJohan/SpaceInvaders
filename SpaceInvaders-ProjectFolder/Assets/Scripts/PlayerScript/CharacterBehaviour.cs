@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterBehaviour : MonoBehaviour
@@ -14,9 +12,9 @@ public class CharacterBehaviour : MonoBehaviour
 
     [Header("Movimentation Sensitivity")]
     [SerializeField] float keyboardMovimentSensitivity;
-    [SerializeField] float mouseSensitivity;
 
     bool CanMove = false;
+    Camera mainCamera;
 
     #region Unity Standard Methods
 
@@ -32,20 +30,56 @@ public class CharacterBehaviour : MonoBehaviour
         GameManager.StartingNewWave -= HandleStartingNewWave;
     }
 
+    void Start()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+    }
+
     void Update() => HandleMovimentationBehaviour();
 
     #endregion
 
     #region Player behaviour methods
 
-    
-    //TODO: Colocar o player na posição do mouse (dentro das limitações)
     void HandleMovimentationBehaviour()
     {
         if (!CanMove)
             return;
 
-        float inputVelocity = GetHorizontalInputVelocity();
+        //movimentação do mouse
+        bool isMouseMoving = (Input.GetAxis("Mouse X") != 0);
+        if (isMouseMoving)
+        {
+            Vector3 newPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            MoveCharacterToPosition(newPosition);
+            return;
+        }
+
+        //Movimentação pelo teclado
+        float inputVelocity = HorizontalKeyboardInput();
+        TranslateCharacter(inputVelocity);
+    }
+
+    void MoveCharacterToPosition(Vector3 position)
+    {
+        //Verifica se está dentro dos limites
+        if (position.x >= rightMovimentLimit.position.x)
+        {
+            transform.position = new Vector3(rightMovimentLimit.position.x, transform.position.y, transform.position.z);
+            return;
+        }
+        else if (position.x <= leftMovimentLimit.position.x)
+        {
+            transform.position = new Vector3(leftMovimentLimit.position.x, transform.position.y, transform.position.z);
+            return;
+        }
+
+        transform.position = new Vector3(position.x, transform.position.y, transform.position.z);
+
+    }
+
+    void TranslateCharacter(float inputVelocity)
+    {
         if (inputVelocity == 0)
             return;
         else if (inputVelocity > 0 && transform.position.x >= rightMovimentLimit.position.x)
@@ -62,11 +96,9 @@ public class CharacterBehaviour : MonoBehaviour
         transform.Translate(Vector3.right * inputVelocity * Time.deltaTime);
     }
 
-    float GetHorizontalInputVelocity()
+    float HorizontalKeyboardInput()
     {
-        if (Input.GetAxis("Mouse X") != 0)
-            return Input.GetAxis("Mouse X") * mouseSensitivity;
-        else if (Input.GetKey(key_Left) && !Input.GetKey(key_Right))
+        if (Input.GetKey(key_Left) && !Input.GetKey(key_Right))
             return -keyboardMovimentSensitivity;
         else if (Input.GetKey(key_Right) && !Input.GetKey(key_Left))
             return keyboardMovimentSensitivity;

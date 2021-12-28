@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerCombatBehaviour : MonoBehaviour
 {
-    public KeyCode key_Shot;
+    public KeyCode key_Shoot1 = KeyCode.Space;
+    public KeyCode key_Shoot2 = KeyCode.UpArrow;
 
     [Header("Combat Variables")]
     [SerializeField] GameObject projectilePrefab;
@@ -57,7 +58,7 @@ public class PlayerCombatBehaviour : MonoBehaviour
             return;
         
         bool hasAmmo = maximumActiveProjectilesSimultaneously > bulletInstances.Count;
-        bool wantToShoot = (Input.GetKey(key_Shot) || Input.GetMouseButton(0));
+        bool wantToShoot = (Input.GetKey(key_Shoot1) || Input.GetKey(key_Shoot2) || Input.GetMouseButton(0));
         
         if (wantToShoot && hasAmmo)
             StartCoroutine(Shoot());

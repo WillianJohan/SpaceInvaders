@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -11,6 +12,10 @@ public class GameManager : Singleton<GameManager>
     [Header("Spawn Reference")]
     [SerializeField] Transform playerSpawnLocation;
     [SerializeField] Transform barrierSpawnLocation;
+    [SerializeField] Transform AlienSpawnLocation;
+    [SerializeField] Transform BossSpawnLocation;
+
+    [Header("SpawnerController")]
     [SerializeField] AlienSpawner alienSpawner;
 
     [Header("Spawn Atributte")]
@@ -75,7 +80,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn
-        alienSpawner.SpawnAliens();
+        alienSpawner.SpawnAliens(AlienSpawnLocation);
         
 
         while (isSpawningAliens)
@@ -93,7 +98,16 @@ public class GameManager : Singleton<GameManager>
         //Destroy Barrier
         Destroy(barrierInstance);
         yield return new WaitForSeconds(spawnVelocity);
-        
+
+        //Destroy Projectiles
+        List<ProjectileBehaviour> projectiles = new List<ProjectileBehaviour>();
+        projectiles.AddRange(FindObjectsOfType<ProjectileBehaviour>());
+        for(int i = projectiles.Count; i > 0; i--)
+        {
+            Destroy(projectiles[i - 1].gameObject);
+            projectiles.RemoveAt(i - 1);
+        }
+
 
         //instantiate a new Barrier
         barrierInstance = Instantiate(barrierPrefab, barrierSpawnLocation.position, Quaternion.identity);
@@ -101,7 +115,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(spawnVelocity);
 
         //Enemies Spawn
-        alienSpawner.SpawnAliens();
+        alienSpawner.SpawnAliens(AlienSpawnLocation);
 
         while (isSpawningAliens)
             yield return new WaitForSeconds(0.1f);

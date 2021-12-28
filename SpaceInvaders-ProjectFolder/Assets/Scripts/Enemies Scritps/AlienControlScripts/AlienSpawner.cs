@@ -13,9 +13,9 @@ public class AlienSpawner : Singleton<AlienSpawner>
 	public static event Action OnStartSpawningAliens;
 	public static event Action OnFinishedSpawningAliens;
 
-	public void SpawnAliens() => StartCoroutine(SpawnEnemieLines());
+	public void SpawnAliens(Transform offsetPosition) => StartCoroutine("SpawnEnemieLines", offsetPosition);
 
-	IEnumerator SpawnEnemieLines()
+	IEnumerator SpawnEnemieLines(Transform offesetPosition)
     {
 		OnStartSpawningAliens?.Invoke();
 
@@ -24,9 +24,9 @@ public class AlienSpawner : Singleton<AlienSpawner>
 			for (int x = 0; x < enemiesForLine; x++)
 			{
 				Vector3 spawnPosition = new Vector3(
-					transform.position.x + (x * horizontalSpace), 
-					transform.position.y + (y * verticalSpace), 
-					transform.position.z);
+					offesetPosition.position.x + (x * horizontalSpace),
+					offesetPosition.position.y + (y * verticalSpace),
+					offesetPosition.position.z);
 
 				GameObject alienInstance = Instantiate(controlCenter.alienLineControl[y].AlienPrefab, spawnPosition, Quaternion.identity, this.transform);
 				controlCenter.alienLineControl[y].AddAlien(alienInstance);
