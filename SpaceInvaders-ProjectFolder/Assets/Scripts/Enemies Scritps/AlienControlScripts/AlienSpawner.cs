@@ -14,7 +14,6 @@ public class AlienSpawner : Singleton<AlienSpawner>
 	public static event Action OnFinishedSpawningAliens;
 
 	public void SpawnAliens(Transform offsetPosition) => StartCoroutine("SpawnEnemieLines", offsetPosition);
-
 	IEnumerator SpawnEnemieLines(Transform offesetPosition)
     {
 		OnStartSpawningAliens?.Invoke();

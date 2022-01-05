@@ -145,8 +145,11 @@ public class AlienControlCenter : Singleton<AlienControlCenter>
 
 	void HandleFinishedSpawningAliens()
     {
+		//Registra numero de inimigos vivos.
 		aliensLengh = gameManager.AliensAlive;
 		canMove = true;
+
+		//Permite o spawn do boss
     }
 
 	void HandleEndGame()
