@@ -2,7 +2,7 @@
 
 ###### TODO LIST:
  - [x] Fazer a camera tremer quando recebe dano
- - [ ] Spawn do Boss
+ - [x] Spawn do Boss
  - [ ] Particulas de destruição de projéteis
  - [ ] Particula de destruição dos inimigos.
 ---
