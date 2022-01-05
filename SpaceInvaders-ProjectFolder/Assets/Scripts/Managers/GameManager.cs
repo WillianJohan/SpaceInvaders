@@ -15,8 +15,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] Transform AlienSpawnLocation;
     [SerializeField] Transform BossSpawnLocation;
 
-    [Header("SpawnerController")]
+    [Header("SpawnControllers")]
     [SerializeField] AlienSpawner alienSpawner;
+    [SerializeField] AlienBossSpawner alienBossSpawner;
 
     [Header("Spawn Atributte")]
     [SerializeField] float spawnVelocity = 0.2f;
@@ -81,7 +82,7 @@ public class GameManager : Singleton<GameManager>
 
         //Enemies Spawn
         alienSpawner.SpawnAliens(AlienSpawnLocation);
-        
+        alienBossSpawner.ConfigureSpawnBossPosition(BossSpawnLocation);
 
         while (isSpawningAliens)
             yield return new WaitForSeconds(0.1f);
