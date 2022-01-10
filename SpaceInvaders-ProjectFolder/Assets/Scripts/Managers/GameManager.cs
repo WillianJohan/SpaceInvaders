@@ -132,9 +132,18 @@ public class GameManager : Singleton<GameManager>
     void HandleOnStartSpawningAliens()      => isSpawningAliens = true;
     void HandleOnFinishedSpawningAliens()   => isSpawningAliens = false;
 
-    void HandleAlienSpawn(AlienType type)   => AliensAlive++;
+    void HandleAlienSpawn(AlienType type)
+    {
+        if (type == AlienType.Boss)
+            return;
+        AliensAlive++;
+    }
+
     void HandleAlienDie(AlienType type)
     {
+        if (type == AlienType.Boss)
+            return;
+
         AliensAlive--;
         if (AliensAlive == 0)
             StartCoroutine(NewWave());
